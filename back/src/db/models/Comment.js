@@ -17,7 +17,7 @@ class Comment {
       .lean()
       .skip((page - 1) * limit)
       .limit(limit)
-      .populate("userId", { _id: 1, profileUrl: 1, nickname: 1 })
+      .populate("user", { _id: 1, profileUrl: 1, nickname: 1 })
       .populate({
         path: "childComments",
         match: { isDeleted: { $eq: false } },
