@@ -46,7 +46,7 @@ commentRouter.get('/comments/:commentId',  async (req, res, next) => {
   try {
     const { commentId } = req.params;
     const comment = await commentService.getComment({ commentId });
-    if (comment.errorMessage) throw new Error(comment.errorMessage);
+    if (comment?.errorMessage) throw new Error(comment.errorMessage);
     res.status(200).json(comment);
   } catch (err) {
     next(err);

@@ -2,6 +2,7 @@ import cors from "cors";
 import express from "express";
 
 import { errorMiddleware } from "./middlewares/errorMiddleware";
+import { morganMiddleware } from "./middlewares/morganMiddleware";
 import { userAuthRouter } from "./routers/userRouter";
 import { postRouter } from "./routers/postRouter";
 import { commentRouter } from "./routers/commentRouter";
@@ -13,7 +14,12 @@ import { userWordRouter } from "./routers/userWordRouter";
 import { quizRouter } from "./routers/quizRouter";
 import { chartRouter } from "./routers/chartRouter";
 
+import { logger } from "./config/winston";
+
+
 const app = express();
+
+if (process.env.NODE_ENV === "production") global.logger = logger;
 
 // CORS 에러 방지
 app.use(cors());
@@ -23,6 +29,9 @@ app.use(cors());
 // express.urlencoded: 주로 Form submit 에 의해 만들어지는 URL-Encoded 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// logging middleware
+app.use(morganMiddleware);
 
 // 기본 페이지
 app.get("/", (req, res) => {
