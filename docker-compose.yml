@@ -1,0 +1,10 @@
+version: '0.0.1'
+services:
+  app:
+    build: .
+    image: docker-test-hs
+    environment:
+      NODE_ENV: production
+    tty: true
+    ports:
+      - '3000:3000'
